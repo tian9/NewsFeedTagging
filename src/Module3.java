@@ -42,10 +42,18 @@ public class Module3 {
 		int ind = 0;
 		int listInd = 0;
 		int preEnd = -1; // to check any overlap tags
-		while(ind < str.length() && listInd < list.size()){
+		int len = str.length();
+		while(ind < len && listInd < list.size()){
 			InputDataUnit curr = list.get(listInd);
 			int start = curr.getStart();
+			int end = curr.getEnd();
 			
+			//corner cases: out of range tagging
+			if(start < 0) continue;
+			if(start >= len || end > len){
+				break;
+			}
+			//corner cases: overlapped tagging
 			if(preEnd > start){
 				System.out.println("Wrong Input, OverLapped Tagging from Module 2, ignored the curr concept.");
 				System.out.println(String.format("Curr concept starting frm %d: overlapped with previous concept end with %d", start, preEnd));
@@ -58,28 +66,29 @@ public class Module3 {
 				wrappedList.append(str.substring(ind, start));
 				ind = start;
 			}
-			else{ // concepts
+			else{ 
 				/*
-				 * form a tag by a derived Concept class.
+				 * concept characters: attach a tag by a derived Concept class.
 				 */
-
-				//update
-				preEnd = curr.getEnd();
-				ind = curr.getEnd() + 1;
-				listInd++;
-
+				
 				Concept concept = curr.getConcept();
 				
 				//corner case"
 				if(concept == null || !existClass(map.get(curr.getType()))) {
-					wrappedList.append(str.substring(start, preEnd) + " ");
-					System.out.println(String.format("No concept tagged or no Class for the concept at range: %d to %d, \nplain text was appended. ", start, preEnd));
+					wrappedList.append(str.substring(start, end) + " ");
+					System.out.println(String.format("No concept tagged or no Class for the concept at range: %d to %d, \nplain text was appended. ", start, end));
 					continue;
+				}else{
+					//set concept's string and add its own tag
+					concept.setName(str.substring(start, end));
+					wrappedList.append(concept.addTag());
 				}
-				//set concept's string and add its own tag
-				concept.setName(str.substring(start, preEnd));
-				wrappedList.append(concept.addTag());
-
+				
+				//update
+				preEnd = end;
+				ind = end + 1;
+				listInd++;
+				
 			}
 
 		}//while
@@ -89,7 +98,11 @@ public class Module3 {
 
 		return wrappedList.toString().trim();
 	}
-
+	/**
+	 * Given a className, return if exist a class in local dir named it.
+	 * @param className
+	 * @return 
+	 */
 	@SuppressWarnings("finally")
 	private boolean existClass(String className){
 		if(className == null) return false;
