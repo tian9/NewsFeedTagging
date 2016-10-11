@@ -10,6 +10,7 @@ public class InputDataUnit{
 	private int start;
 	private int end;
 	private String type;
+	private Concept concept;
 
 	/**
 	 * constructor
@@ -17,10 +18,11 @@ public class InputDataUnit{
 	 * @param end : end index of the concept substring (exclusive)
 	 * @param type : the concept type, such as "Entity".
 	 */
-	public InputDataUnit(int start, int end, String type) {
+	public InputDataUnit(int start, int end, String type, Concept concept) {
 		this.start = start;
 		this.end = end;
 		this.type = type;
+		this.concept = concept;
 	}
 
 	/**
@@ -28,18 +30,28 @@ public class InputDataUnit{
 	 * @param start
 	 * @param end
 	 */
-	public InputDataUnit(int start, int end) {
+	public InputDataUnit(int start, int end, String type) {
 		this.start = start;
 		this.end = end;
-	}
-
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public String getType(){
+		return this.type;
+	}
+	
+	public void SetType(String type){
+		this.type = type;
+	}
+	
+	public Concept getConcept() {
+		return this.concept;
+	}
+
+	public void setConcept(Concept concept) {
+		this.concept = concept;
+	}
+	
 
 	/**
 	 * set both start and end index (exclusive) of a substring
