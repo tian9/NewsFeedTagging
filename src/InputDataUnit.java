@@ -19,21 +19,12 @@ public class InputDataUnit{
 	 * @param type : the concept type, such as "Entity".
 	 */
 	public InputDataUnit(int start, int end, String type, Concept concept) {
+		if(start > end) return;
+		if(start < 0) return;
 		this.start = start;
 		this.end = end;
 		this.type = type;
 		this.concept = concept;
-	}
-
-	/**
-	 * constructor without a specific type
-	 * @param start
-	 * @param end
-	 */
-	public InputDataUnit(int start, int end, String type) {
-		this.start = start;
-		this.end = end;
-		this.type = type;
 	}
 	
 	public String getType(){

@@ -8,10 +8,6 @@ public class Concept {
 
 	public Concept(){}
 
-	public Concept(String name){
-		this.name = name;
-	}
-
 	public void setName(String name){
 		this.name = name;
 	}
