@@ -50,9 +50,7 @@ public class Module3 {
 			
 			//corner cases: out of range tagging
 			if(start < 0) continue;
-			if(start >= len || end > len){
-				break;
-			}
+			if(start >= len || end > len){ break; }
 			//corner cases: overlapped tagging
 			if(preEnd > start){
 				System.out.println("Wrong Input, OverLapped Tagging from Module 2, ignored the curr concept.");
@@ -65,8 +63,7 @@ public class Module3 {
 			if(ind < start){ //non-concept characters
 				wrappedList.append(str.substring(ind, start));
 				ind = start;
-			}
-			else{ 
+			} else { 
 				/*
 				 * concept characters: attach a tag by a derived Concept class.
 				 */
@@ -77,7 +74,6 @@ public class Module3 {
 				if(concept == null || !existClass(map.get(curr.getType()))) {
 					wrappedList.append(str.substring(start, end) + " ");
 					System.out.println(String.format("No concept tagged or no Class for the concept at range: %d to %d, \nplain text was appended. ", start, end));
-					continue;
 				}else{
 					//set concept's string and add its own tag
 					concept.setName(str.substring(start, end));
